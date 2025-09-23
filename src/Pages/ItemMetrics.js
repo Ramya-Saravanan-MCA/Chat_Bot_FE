@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const API_BASE = "/api";
+const API_BASE = "http://43.204.228.69:8000";
 
 const ItemMetrics = ({ sessionId }) => {
   const [turns, setTurns] = useState([]);

@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
 
-const API_BASE = "/api";
-
+const API_BASE = "http://43.204.228.69:8000";
 const SessionSetup = ({ onProceed }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
