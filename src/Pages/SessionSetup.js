@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
 
-const API_BASE = "http://localhost:8000";
+const API_BASE = "/api";
 
 const SessionSetup = ({ onProceed }) => {
   const [selectedOption, setSelectedOption] = useState("");

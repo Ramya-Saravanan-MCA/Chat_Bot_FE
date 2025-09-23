@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const API_BASE = "http://localhost:8000";
+const API_BASE = "/api";
 
 const ChatUI = ({ sessionId, messages, setMessages }) => {
   const [query, setQuery] = useState("");
