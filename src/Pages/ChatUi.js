@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const API_BASE = "http://43.204.228.69:8000";
 const ChatUI = ({ sessionId, messages, setMessages }) => {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
@@ -54,7 +53,7 @@ const ChatUI = ({ sessionId, messages, setMessages }) => {
     setMessages((prev) => [...prev, typingMessage]);
 
     try {
-      const res = await fetch(`${API_BASE}/chat`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ session_id: sessionId, query: userMessage.text }),

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-const API_BASE = "http://43.204.228.69:8000";
 const SystemMetrics = () => {
   const [metrics, setMetrics] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -23,7 +22,7 @@ const SystemMetrics = () => {
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
-        const response = await fetch(`${API_BASE}/analytics/system`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/analytics/system`);
         if (!response.ok) throw new Error("Failed to fetch system metrics");
         const data = await response.json();
         setMetrics(flattenMetrics(data));

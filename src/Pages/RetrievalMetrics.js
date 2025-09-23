@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-const API_BASE = "http://43.204.228.69:8000";
 const RetrievalMetrics = ({ sessionId, messages = [] }) => {
   const [metrics, setMetrics] = useState(null);
 
@@ -10,7 +9,7 @@ const RetrievalMetrics = ({ sessionId, messages = [] }) => {
     const fetchMetrics = async () => {
       try {
         const res = await fetch(
-          `${API_BASE}/analytics/sessions/${sessionId}/metrics`
+          `${process.env.REACT_APP_API_URL}/analytics/sessions/${sessionId}/metrics`
         );
         if (!res.ok) throw new Error("Failed to fetch metrics");
         const data = await res.json();

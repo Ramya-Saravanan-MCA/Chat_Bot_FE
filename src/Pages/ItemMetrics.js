@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-const API_BASE = "http://43.204.228.69:8000";
 
 const ItemMetrics = ({ sessionId }) => {
   const [turns, setTurns] = useState([]);
@@ -13,7 +12,7 @@ const ItemMetrics = ({ sessionId }) => {
     const fetchSessionHistory = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${API_BASE}/sessions/history/${sessionId}`);
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/sessions/history/${sessionId}`);
         if (!res.ok) throw new Error(`Failed to fetch session history (${res.status})`);
         const data = await res.json();
         setTurns(Array.isArray(data?.items) ? data.items : []);

@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
 
-const API_BASE = "http://43.204.228.69:8000";
 const SessionSetup = ({ onProceed }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
@@ -24,7 +23,7 @@ const SessionSetup = ({ onProceed }) => {
   useEffect(() => {
     const fetchSessionTables = async () => {
       try {
-        const res = await fetch(`${API_BASE}/lancedb/session-tables`);
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/lancedb/session-tables`);
         const data = await res.json();
         setSessionTables(data.tables || []);
       } catch (err) {
@@ -37,7 +36,7 @@ const SessionSetup = ({ onProceed }) => {
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const res = await fetch(`${API_BASE}/documents`);
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/documents`);
         const data = await res.json();
         setDocuments(data.documents || []);
       } catch (err) {
@@ -70,7 +69,7 @@ const SessionSetup = ({ onProceed }) => {
       const formData = new FormData();
       formData.append("files", uploadFile);
 
-      const uploadRes = await fetch(`${API_BASE}/documents/upload`, {
+      const uploadRes = await fetch(`${process.env.REACT_APP_API_URL}/documents/upload`, {
         method: "POST",
         body: formData,
       });
@@ -93,13 +92,13 @@ const SessionSetup = ({ onProceed }) => {
         return;
       }
 
-      await fetch(`${API_BASE}/documents/ingest`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/documents/ingest`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ document_name: uploadedFile, force_reindex: true }),
       });
 
-      const res = await fetch(`${API_BASE}/documents`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/documents`);
       const data = await res.json();
       setDocuments(data.documents || []);
 
@@ -129,7 +128,7 @@ const SessionSetup = ({ onProceed }) => {
       top_k_final: topKFinal,
     };
     try {
-      const res = await fetch(`${API_BASE}/sessions`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/sessions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

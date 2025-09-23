@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-const API_BASE = "http://43.204.228.69:8000";
 
 const DataEvalMetrics = ({ query, sessionId }) => {
   const [data, setData] = useState(null);
@@ -13,12 +12,12 @@ const DataEvalMetrics = ({ query, sessionId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resDocs = await fetch(`${API_BASE}/knowledge-base`);
+        const resDocs = await fetch(`${process.env.REACT_APP_API_URL}/knowledge-base`);
         if (!resDocs.ok) throw new Error(`Failed with status ${resDocs.status}`);
         const docsData = await resDocs.json();
         setData(docsData);
 
-        const resChunks = await fetch(`${API_BASE}/documents/chunks?limit=1`);
+        const resChunks = await fetch(`${process.env.REACT_APP_API_URL}/documents/chunks?limit=1`);
         if (!resChunks.ok) throw new Error(`Failed with status ${resChunks.status}`);
         const chunkData = await resChunks.json();
         setChunkSummary(chunkData.summary);
@@ -36,7 +35,7 @@ const DataEvalMetrics = ({ query, sessionId }) => {
       if (!query || !sessionId) return;
       setLoadingChat(true);
       try {
-        const resChat = await fetch(`${API_BASE}/chat`, {
+        const resChat = await fetch(`${process.env.REACT_APP_API_URL}/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ session_id: sessionId, query }),
