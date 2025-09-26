@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 const BufferMetrics = ({ sessionId }) => {
   const [latestTurn, setLatestTurn] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -6,13 +7,17 @@ const BufferMetrics = ({ sessionId }) => {
 
   useEffect(() => {
     if (!sessionId) return;
+
     const fetchSessionHistory = async () => {
       try {
         setLoading(true);
         const res = await fetch(`${process.env.REACT_APP_API_URL}/sessions/history/${sessionId}`);
         if (!res.ok) throw new Error(`Failed to fetch session history (${res.status})`);
         const data = await res.json();
-        const lastTurn = Array.isArray(data?.buffer) && data.buffer.length > 0 ? data.buffer[data.buffer.length - 1] : null;
+        const lastTurn =
+          Array.isArray(data?.buffer) && data.buffer.length > 0
+            ? data.buffer[data.buffer.length - 1]
+            : null;
         setLatestTurn(lastTurn);
       } catch (err) {
         setError(err.message);
@@ -20,26 +25,30 @@ const BufferMetrics = ({ sessionId }) => {
         setLoading(false);
       }
     };
+
     fetchSessionHistory();
   }, [sessionId]);
 
-  if (loading) return (
-    <div className="flex justify-center items-center h-screen text-gray-600">
-      Loading latest chat...
-    </div>
-  );
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen text-gray-600">
+        Loading latest chat...
+      </div>
+    );
 
-  if (error) return (
-    <div className="flex justify-center items-center h-screen text-red-500">
-      Error: {error}
-    </div>
-  );
+  if (error)
+    return (
+      <div className="flex justify-center items-center h-screen text-red-500">
+        Error: {error}
+      </div>
+    );
 
-  if (!latestTurn) return (
-    <div className="flex justify-center items-center h-screen text-gray-600">
-      No chat history found.
-    </div>
-  );
+  if (!latestTurn)
+    return (
+      <div className="flex justify-center items-center h-screen text-gray-600">
+        No chat history found.
+      </div>
+    );
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 px-4">
