@@ -59,7 +59,8 @@ const ChatUI = ({ sessionId, messages, setMessages }) => {
         body: JSON.stringify({ session_id: sessionId, query: userMessage.text }),
       });
       const data = await res.json();
-      const botText = data.answer || "Could you ask something else I can help you with?";
+      const botText =
+        data.answer || "Could you ask something else I can help you with?";
       typeBotMessage(botText);
     } catch (err) {
       console.error("Chat error:", err);
@@ -78,15 +79,18 @@ const ChatUI = ({ sessionId, messages, setMessages }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 p-6">
-      <div className="w-full max-w-3xl h-[85vh] flex flex-col bg-white rounded-2xl shadow-2xl overflow-hidden">
-        <div className="bg-gradient-to-r from-gray-600 to-gray-600 text-white p-4 flex flex-col items-center">
-          <h2 className="text-xl font-semibold tracking-wide">Hybrid RAG Chatbot</h2>
-          <div className="flex space-x-3 mt-2">
-            <div className="px-3 py-1 bg-white/20 rounded-full text-xs font-medium">
-              Session ID: <span className="font-mono">{sessionId}</span>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 p-2 sm:p-6">
+      <div className="w-full max-w-full sm:max-w-3xl h-[85vh] flex flex-col bg-white rounded-none sm:rounded-2xl shadow-lg sm:shadow-2xl overflow-hidden">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-gray-600 to-gray-600 text-white p-3 sm:p-4 flex flex-col items-center">
+          <h2 className="text-lg sm:text-xl font-semibold tracking-wide">
+            Hybrid RAG Chatbot
+          </h2>
+          <div className="flex flex-wrap justify-center gap-2 mt-2 text-xs sm:text-sm">
+            <div className="px-2 sm:px-3 py-1 bg-white/20 rounded-full font-medium">
+              Session: <span className="font-mono">{sessionId}</span>
             </div>
-            <div className="px-3 py-1 bg-white/20 rounded-full text-xs font-medium">
+            <div className="px-2 sm:px-3 py-1 bg-white/20 rounded-full font-medium">
               Turn:{" "}
               <span className="font-bold">
                 {messages.filter((m) => m.role === "bot" && !m.isTyping).length}
@@ -95,21 +99,24 @@ const ChatUI = ({ sessionId, messages, setMessages }) => {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-5 bg-gray-50 space-y-4">
+        {/* Messages */}
+        <div className="flex-1 overflow-y-auto p-3 sm:p-5 bg-gray-50 space-y-3 sm:space-y-4">
           {messages.map((m, i) => (
             <div
               key={i}
-              className={`flex items-end ${m.role === "user" ? "justify-end" : "justify-start"}`}
+              className={`flex items-end ${
+                m.role === "user" ? "justify-end" : "justify-start"
+              }`}
             >
               {m.role === "bot" && (
                 <div className="flex-shrink-0 mr-2">
-                  <div className="w-9 h-9 rounded-full bg-gray-500 flex items-center justify-center text-white font-bold shadow">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gray-500 flex items-center justify-center text-white font-bold shadow">
                     B
                   </div>
                 </div>
               )}
               <div
-                className={`max-w-[70%] px-4 py-2 rounded-2xl shadow-sm text-sm leading-relaxed ${
+                className={`max-w-[85%] sm:max-w-[70%] px-3 sm:px-4 py-2 rounded-2xl shadow-sm text-sm leading-relaxed ${
                   m.role === "user"
                     ? "bg-gray-600 text-white rounded-br-none"
                     : "bg-white text-gray-800 rounded-bl-none"
@@ -119,7 +126,7 @@ const ChatUI = ({ sessionId, messages, setMessages }) => {
               </div>
               {m.role === "user" && (
                 <div className="flex-shrink-0 ml-2">
-                  <div className="w-9 h-9 rounded-full bg-gray-600 flex items-center justify-center text-white font-bold shadow">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gray-600 flex items-center justify-center text-white font-bold shadow">
                     U
                   </div>
                 </div>
@@ -129,20 +136,21 @@ const ChatUI = ({ sessionId, messages, setMessages }) => {
           <div ref={chatEndRef}></div>
         </div>
 
-        <div className="p-4 bg-gray-100 border-t flex space-x-2">
+        {/* Input */}
+        <div className="p-3 sm:p-4 bg-gray-100 border-t flex flex-col sm:flex-row gap-2">
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Type your message..."
-            className="flex-grow px-4 py-2 rounded-full border focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm"
+            className="flex-grow px-3 sm:px-4 py-2 rounded-full border focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm"
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             disabled={loading}
           />
           <button
             onClick={sendMessage}
             disabled={loading}
-            className="px-6 py-2 rounded-full bg-gray-600 text-white font-medium hover:bg-gray-700 disabled:bg-gray-400 transition"
+            className="w-full sm:w-auto px-4 sm:px-6 py-2 rounded-full bg-gray-600 text-white font-medium hover:bg-gray-700 disabled:bg-gray-400 transition"
           >
             Send
           </button>

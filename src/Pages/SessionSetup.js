@@ -139,9 +139,6 @@ const SessionSetup = ({ onProceed }) => {
       if (data.session_id) {
         setSessionId(data.session_id);
         setSessionInfo(data);
-        console.log("Session created successfully!");
-        console.log("Session ID:", data.session_id);
-        console.log("Session Details:", data);
         onProceed && onProceed(data.session_id);
       } else {
         alert("Failed to create session");
@@ -156,14 +153,14 @@ const SessionSetup = ({ onProceed }) => {
   };
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold text-center mb-6 text-gray-600">
+    <div className="p-4 sm:p-6 max-w-full sm:max-w-2xl mx-auto">
+      <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 text-gray-600">
         Hybrid RAG Chatbot
       </h1>
 
       {sessionId && sessionInfo && (
         <div className="mb-8 p-6 border border-gray-400 rounded-lg shadow bg-gray-50">
-          <h2 className="text-2xl font-bold text-green-700 mb-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-green-700 mb-4">
             Session Info
           </h2>
           <p>
@@ -186,11 +183,9 @@ const SessionSetup = ({ onProceed }) => {
       )}
 
       {rawResponse && (
-        <div className="mb-6 p-4 bg-gray-100 border rounded">
+        <div className="mb-6 p-4 bg-gray-100 border rounded overflow-x-auto">
           <h3 className="font-bold">Raw API Response</h3>
-          <pre className="text-xs overflow-x-auto">
-            {JSON.stringify(rawResponse, null, 2)}
-          </pre>
+          <pre className="text-xs sm:text-sm">{JSON.stringify(rawResponse, null, 2)}</pre>
         </div>
       )}
 
@@ -238,7 +233,7 @@ const SessionSetup = ({ onProceed }) => {
           </div>
 
           {selectedOption === "specific" && (
-            <div className="ml-6 mt-3 space-y-2">
+            <div className="ml-4 sm:ml-6 mt-3 space-y-2">
               {documents.length === 0 && (
                 <p className="text-gray-500 italic">No documents available</p>
               )}
@@ -252,9 +247,9 @@ const SessionSetup = ({ onProceed }) => {
                   }`}
                   onClick={() => setDocument(doc.name)}
                 >
-                  <span className="font-medium text-gray-800">{doc.name}</span>
+                  <span className="font-medium text-gray-800 truncate">{doc.name}</span>
                   <FaTrash
-                    className="text-red-500 hover:text-red-700"
+                    className="text-red-500 hover:text-red-700 ml-2 flex-shrink-0"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleDelete(doc.name);
@@ -294,7 +289,7 @@ const SessionSetup = ({ onProceed }) => {
             onChange={(e) => setUploadFile(e.target.files[0])}
           />
           <div
-            className="border-2 border-dashed p-6 cursor-pointer"
+            className="border-2 border-dashed p-4 sm:p-6 cursor-pointer text-center text-sm sm:text-base truncate"
             onClick={() => fileInputRef.current.click()}
           >
             {uploadFile ? uploadFile.name : "Click to upload PDF"}
@@ -302,7 +297,7 @@ const SessionSetup = ({ onProceed }) => {
           <button
             onClick={handleUpload}
             disabled={loading || !uploadFile}
-            className="bg-gray-500 text-white px-4 py-2 mt-4 rounded disabled:bg-gray-400"
+            className="bg-gray-500 text-white px-3 sm:px-4 py-2 mt-4 rounded w-full sm:w-auto disabled:bg-gray-400"
           >
             {loading ? "Uploading..." : "Upload"}
           </button>
@@ -314,7 +309,7 @@ const SessionSetup = ({ onProceed }) => {
         <select
           value={llmModel}
           onChange={(e) => setLlmModel(e.target.value)}
-          className="border p-2 w-full"
+          className="border p-2 w-full rounded"
         >
           <option value="groq">Groq</option>
           <option value="openai">OpenAI</option>
@@ -326,7 +321,7 @@ const SessionSetup = ({ onProceed }) => {
         <select
           value={retrievalMode}
           onChange={(e) => setRetrievalMode(e.target.value)}
-          className="border p-2 w-full"
+          className="border p-2 w-full rounded"
         >
           <option value="hybrid">Hybrid</option>
           <option value="dense">Dense</option>
@@ -334,7 +329,7 @@ const SessionSetup = ({ onProceed }) => {
         </select>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {retrievalMode === "dense" && (
           <div>
             <label className="block font-semibold">Top-K Dense</label>
@@ -342,7 +337,7 @@ const SessionSetup = ({ onProceed }) => {
               type="number"
               value={topKDense}
               onChange={(e) => setTopKDense(Number(e.target.value))}
-              className="border p-2 w-full"
+              className="border p-2 w-full rounded"
             />
           </div>
         )}
@@ -354,7 +349,7 @@ const SessionSetup = ({ onProceed }) => {
               type="number"
               value={topKSparse}
               onChange={(e) => setTopKSparse(Number(e.target.value))}
-              className="border p-2 w-full"
+              className="border p-2 w-full rounded"
             />
           </div>
         )}
@@ -367,7 +362,7 @@ const SessionSetup = ({ onProceed }) => {
                 type="number"
                 value={topKDense}
                 onChange={(e) => setTopKDense(Number(e.target.value))}
-                className="border p-2 w-full"
+                className="border p-2 w-full rounded"
               />
             </div>
             <div>
@@ -376,7 +371,7 @@ const SessionSetup = ({ onProceed }) => {
                 type="number"
                 value={topKSparse}
                 onChange={(e) => setTopKSparse(Number(e.target.value))}
-                className="border p-2 w-full"
+                className="border p-2 w-full rounded"
               />
             </div>
             <div>
@@ -385,7 +380,7 @@ const SessionSetup = ({ onProceed }) => {
                 type="number"
                 value={rrfK}
                 onChange={(e) => setRrfK(Number(e.target.value))}
-                className="border p-2 w-full"
+                className="border p-2 w-full rounded"
               />
             </div>
             <div>
@@ -394,7 +389,7 @@ const SessionSetup = ({ onProceed }) => {
                 type="number"
                 value={topKFinal}
                 onChange={(e) => setTopKFinal(Number(e.target.value))}
-                className="border p-2 w-full"
+                className="border p-2 w-full rounded"
               />
             </div>
           </>
@@ -403,7 +398,7 @@ const SessionSetup = ({ onProceed }) => {
 
       <button
         onClick={handleProceed}
-        className="bg-gray-700 hover:bg-gray-900 text-white font-semibold px-4 py-2 mt-6 rounded"
+        className="bg-gray-700 hover:bg-gray-900 text-white font-semibold px-3 sm:px-4 py-2 mt-6 rounded w-full sm:w-auto"
         disabled={loading}
       >
         {loading ? "Processing ..." : "Proceed to Chat"}
