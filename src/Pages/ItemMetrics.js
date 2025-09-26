@@ -46,43 +46,22 @@ const ItemMetrics = ({ sessionId }) => {
             <thead className="bg-gray-100 sticky top-0 z-10 shadow-sm">
               <tr>
                 {[
-                  "Session ID",
-                  "Turn ID",
-                  "User Query",
-                  "Bot Response",
-                  "Summary",
-                  "Intent Labels",
-                  "Intent Confidence",
-                  "Slots",
-                  "Retrieval Type",
-                  "Retrieval Strength",
-                  "Embedding Latency (s)",
-                  "Dense Retrieval Latency (s)",
-                  "Sparse Retrieval Latency (s)",
-                  "LLM Latency (s)",
-                  "Total Latency (s)",
-                  "Timestamp",
+                  "Session ID", "Turn ID", "User Query", "Bot Response", "Summary",
+                  "Intent Labels", "Intent Confidence", "Slots", "Retrieval Type",
+                  "Retrieval Strength", "Embedding Latency (s)", "Dense Retrieval Latency (s)",
+                  "Sparse Retrieval Latency (s)", "LLM Latency (s)", "Total Latency (s)", "Timestamp"
                 ].map((col) => (
-                  <th
-                    key={col}
-                    className="border-b px-4 py-3 text-left text-sm font-semibold tracking-wide"
-                  >
+                  <th key={col} className="border-b px-4 py-3 text-left text-sm font-semibold tracking-wide">
                     {col}
                   </th>
                 ))}
               </tr>
             </thead>
+
             <tbody>
               {turns.map((turn, idx) => (
-                <tr
-                  key={turn.turn_id}
-                  className={`transition duration-150 hover:bg-gray-50 ${
-                    idx % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  }`}
-                >
-                  <td className="border px-3 py-2 truncate max-w-xs" title={turn.session_id}>
-                    {turn.session_id}
-                  </td>
+                <tr key={turn.turn_id} className={`transition duration-150 hover:bg-gray-50 ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"}`}>
+                  <td className="border px-3 py-2 truncate max-w-xs" title={turn.session_id}>{turn.session_id}</td>
                   <td className="border px-3 py-2 text-center">{turn.turn_id}</td>
                   <td className="border px-3 py-2 max-w-xs align-top">
                     <div className="overflow-x-auto whitespace-nowrap">{turn.user_query}</div>
@@ -107,6 +86,7 @@ const ItemMetrics = ({ sessionId }) => {
                 </tr>
               ))}
             </tbody>
+
           </table>
         </div>
       </div>
